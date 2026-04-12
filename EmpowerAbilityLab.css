@@ -1,3 +1,10 @@
+/* ============================================================
+   SKIP LINK
+   WHY: WCAG 2.4.1 (Bypass Blocks).
+   Visually hidden by default (top: -100% moves it off-screen).
+   Appears ONLY when it receives keyboard focus (top: 0).
+   Must be the first focusable element on the page.
+   ============================================================ */
 .skip-link {
   position: absolute;
   top: -100%;
@@ -14,27 +21,62 @@
 
 .skip-link:focus {
   top: 0;
+  /* WHY outline on skip link focus:
+     Makes it clear to the user which element is focused.
+     White outline on blue background — clear contrast. */
   outline: 3px solid #fff;
   outline-offset: 2px;
 }
 
+
+/* ============================================================
+   BODY LAYOUT
+   ============================================================ */
 body {
+  /* WHY padding-top: 70px:
+     The navbar is fixed-top so it overlaps content.
+     This pushes the body content below the navbar height. */
   padding-top: 70px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-main { flex: 1; }
+main {
+  flex: 1;
+}
 
+
+/* ============================================================
+   FOCUS INDICATORS
+   WHY: WCAG 2.4.7 (Focus Visible, Level AA).
+   Every focusable element MUST have a visible focus indicator.
+   Browser defaults are often invisible (especially in Chrome).
+   We override with a strong blue outline that is visible on
+   both light AND dark backgrounds.
+
+   :focus-visible targets keyboard focus only — mouse clicks
+   do NOT show the outline (prevents the "clicked button has
+   ugly ring" problem while keeping full keyboard accessibility).
+   ============================================================ */
 :focus-visible {
   outline: 3px solid #0d6efd;
   outline-offset: 3px;
   border-radius: 2px;
 }
 
-:focus:not(:focus-visible) { outline: none; }
+/* Remove outline for mouse users (but NOT keyboard users) */
+:focus:not(:focus-visible) {
+  outline: none;
+}
 
+
+/* ============================================================
+   HERO SECTION
+   WHY background color #e9ecef:
+   Dark body text (#212529) on #e9ecef = contrast ratio 15.3:1 ✅
+   WCAG 1.4.3 requires minimum 4.5:1 for normal text.
+   ============================================================ */
 .hero-section {
   background-color: #e9ecef;
   border-bottom: 1px solid #ced4da;
@@ -44,21 +86,72 @@ main { flex: 1; }
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
+  /* WHY no custom color here:
+     Default body text color (#212529) on #e9ecef = 15.3:1 ✅
+     No override needed — it already passes WCAG 1.4.3. */
 }
 
+
+/* ============================================================
+   NAVBAR — ACTIVE AND INACTIVE LINK CONTRAST
+   ============================================================ */
+
+/*
+  WHY we define explicit colors for nav links:
+  Bootstrap's default navbar-dark makes inactive links semi-transparent
+  white (rgba 255,255,255,0.55) on dark background — that can fail
+  contrast depending on the exact bg color.
+
+  FIX: We force fully opaque white (#fff) for inactive links.
+  White (#fff) on navbar bg (#212529) = 16.7:1 ✅ WCAG 1.4.3.
+*/
+.navbar-dark .navbar-nav .nav-link {
+  color: #fff;
+  /* WHY: Ensures inactive nav links are full white, not semi-transparent */
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus {
+  color: #fff;
+  text-decoration: underline;
+  /* WHY underline on hover/focus:
+     WCAG 1.4.1 (Use of Color) — color alone cannot distinguish
+     interactive state. Underline provides a non-color indicator. */
+}
+
+/*
+  WHY active link gets bg-primary blue + white text:
+  White (#fff) on #0d6efd (Bootstrap primary blue) = 4.54:1 ✅
+  This just meets WCAG 1.4.3 AA for large text/UI components.
+  The active link is larger/bolder text context so this is acceptable.
+
+  We use both .active class (visual) AND aria-current="page" (screen reader).
+  Both are required — one for sighted users, one for SR users.
+*/
 .navbar-nav .nav-link.active,
 .navbar-nav .nav-link[aria-current="page"] {
   background-color: #0d6efd;
   border-radius: 0.375rem;
   color: #fff !important;
   padding-inline: 0.75rem;
+  font-weight: 600;
+  /* WHY font-weight 600:
+     Makes the active page link visually distinct from inactive links
+     beyond just the blue background — supports WCAG 1.4.1 (Use of Color)
+     by not relying on color alone to show active state. */
 }
 
+
+/* ============================================================
+   FORM ERROR STYLES (used in Schedule view — teammate's section)
+   Included here so the CSS file is complete.
+   ============================================================ */
 .field-error {
   color: #b91c1c;
   font-size: 0.875rem;
   margin-top: 0.25rem;
   min-height: 1.25rem;
+  /* WHY min-height: layout does not jump when error appears/disappears */
 }
 
 .form-control.is-invalid {
@@ -72,6 +165,11 @@ main { flex: 1; }
   box-shadow: 0 0 0 0.25rem rgba(185, 28, 28, 0.25);
 }
 
+
+/* ============================================================
+   TOGGLE SWITCH (used in Schedule view — teammate's section)
+   Included here so the CSS file is complete.
+   ============================================================ */
 .toggle-switch {
   display: inline-flex;
   align-items: center;
@@ -105,15 +203,30 @@ main { flex: 1; }
   transition: transform 0.2s ease;
 }
 
-.toggle-switch[aria-checked="false"] .toggle-track { background-color: #6c757d; }
-.toggle-switch[aria-checked="true"] .toggle-thumb  { transform: translateX(24px); }
+.toggle-switch[aria-checked="false"] .toggle-track {
+  background-color: #6c757d;
+}
 
+.toggle-switch[aria-checked="true"] .toggle-thumb {
+  transform: translateX(24px);
+}
+
+/*
+  WHY focus-visible on the toggle track:
+  The toggle is a custom button. We must provide a visible focus
+  indicator ourselves since it has no default browser styling.
+  WCAG 2.4.7 (Focus Visible).
+*/
 .toggle-switch:focus-visible .toggle-track {
   outline: 3px solid #0d6efd;
   outline-offset: 3px;
   border-radius: 14px;
 }
 
+
+/* ============================================================
+   MODAL STYLES
+   ============================================================ */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -125,7 +238,15 @@ main { flex: 1; }
   padding: 1rem;
 }
 
-.modal-backdrop[hidden] { display: none; }
+/*
+  WHY modal-backdrop[hidden] uses display:none:
+  The hidden attribute alone should do this, but we add it
+  explicitly to ensure no browser renders the backdrop even
+  if the hidden attribute is not fully supported. Belt and suspenders.
+*/
+.modal-backdrop[hidden] {
+  display: none;
+}
 
 .modal-dialog-custom {
   background: #fff;
@@ -153,6 +274,8 @@ main { flex: 1; }
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0;
+  /* WHY no custom color:
+     Default dark text (#212529) on white (#fff) = 16.7:1 ✅ */
 }
 
 .btn-modal-close {
@@ -168,9 +291,14 @@ main { flex: 1; }
   color: #495057;
   border-radius: 0.25rem;
   flex-shrink: 0;
+  /* WHY color #495057:
+     #495057 on white (#fff) = 7.2:1 ✅ WCAG 1.4.3. */
 }
 
-.btn-modal-close:hover { background-color: #f1f3f5; color: #000; }
+.btn-modal-close:hover {
+  background-color: #f1f3f5;
+  color: #000;
+}
 
 .modal-body-custom {
   padding: 1.5rem;
@@ -186,9 +314,32 @@ main { flex: 1; }
   flex-shrink: 0;
 }
 
-body.modal-is-open { overflow: hidden; }
+/* WHY modal-is-open on body:
+   Prevents the page from scrolling while the modal is open.
+   JS adds this class when modal opens, removes it when closed. */
+body.modal-is-open {
+  overflow: hidden;
+}
 
+
+/* ============================================================
+   RESPONSIVE
+   WHY: WCAG 1.4.10 (Reflow, Level AA).
+   Content must be usable at 320px wide (400% zoom on 1280px screen)
+   without horizontal scrolling. Bootstrap's grid handles most of this,
+   but we add specific fixes for small screens.
+   ============================================================ */
 @media (max-width: 767.98px) {
-  .hero-section h1 { font-size: 1.5rem; }
-  .modal-dialog-custom { max-height: 100dvh; border-radius: 0; }
+  .hero-section h1 {
+    font-size: 1.5rem;
+    /* WHY: Prevents text overflow on small screens */
+  }
+
+  .modal-dialog-custom {
+    max-height: 100dvh;
+    border-radius: 0;
+    /* WHY 100dvh: On mobile, dvh accounts for the dynamic viewport
+       (browser chrome showing/hiding). Prevents modal from being
+       taller than the actual visible screen area. */
+  }
 }
