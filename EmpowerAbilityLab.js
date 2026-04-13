@@ -148,15 +148,41 @@ function knowledgeRunner() {
     thankYouMessage.focus();
   });
 
-  // Space bar activation code 
-  document.querySelectorAll('#view-home a[href]').forEach(link => {
+// Space bar activation code
+document.querySelectorAll('#view-home a[href]').forEach(link => {
   link.addEventListener('keydown', e => {
     if (e.key === ' ') {
       e.preventDefault(); // stops page from scrolling on Space
       link.click();       // triggers the link as if clicked
     }
+  }); // ← closes addEventListener
+});   // ← closes forEach
+
+  
+
+  /* ============================================================
+     SERVICES SECTION - ACCORDION BEHAVIOR
+     Only for the Services section
+     ============================================================ */
+  const serviceButtons = document.querySelectorAll('#view-services .services-toggle');
+
+  serviceButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const contentId = button.getAttribute('aria-controls');
+      const content = document.getElementById(contentId);
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+      button.setAttribute('aria-expanded', String(!isExpanded));
+      content.toggleAttribute('hidden', isExpanded);
+    });
+
+    button.addEventListener('keydown', e => {
+      if (e.key === ' ') {
+        e.preventDefault();
+        button.click();
+      }
+    });
   });
-});
 
 }
 

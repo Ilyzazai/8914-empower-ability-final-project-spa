@@ -338,6 +338,46 @@ body.modal-is-open {
   overflow: hidden;
 }
 
+/* ============================================================
+   SERVICES SECTION - ACCORDION BUTTONS
+   Only for the Services section
+   ============================================================ */
+.services-toggle {
+  background: none;
+  border: none;
+  color: #212529;
+  cursor: pointer;
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 0.5rem 0;
+  text-align: left;
+  width: 100%;
+}
+
+.services-toggle:hover,
+.services-toggle:focus-visible {
+  text-decoration: underline;
+}
+
+.services-toggle::after {
+  content: " +";
+  font-weight: 700;
+}
+
+.services-toggle[aria-expanded="true"]::after {
+  content: " −";
+}
+
+#view-services h2 {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+#view-services [id$="-content"] {
+  padding-top: 0.25rem;
+}
+
 
 /* ============================================================
    RESPONSIVE
