@@ -302,7 +302,7 @@
               <h1 id="schedule-heading">Schedule a call</h1>
               <p class="lead">At Empower Ability Labs, we are dedicated to cultivating empathy and driving positive change through immersive experiences. Fill out the form below and we'll get back to you as soon as we can to schedule a call with our sales team!</p>
 
-              <div id="form-messages" aria-live="assertive" aria-atomic="true"></div>
+              <div id="form-messages" aria-live="assertive" aria-atomic="true" tabindex="-1"></div>
               <div id="thank-you-message" class="alert alert-success" hidden tabindex="-1" role="status">
                 <strong>Thank you!</strong> We've received your information and will be in touch soon to schedule your call.
               </div>
@@ -313,11 +313,11 @@
                   <input type="text" class="form-control" id="business-name" name="businessName" autocomplete="organization">
                 </div>
                 <div class="mb-3">
-                  <label for="phone-number" class="form-label">Phone number <span class="text-muted fw-normal">(613-123-1234)</span></label>
+                  <label for="phone-number" class="form-label">Phone number <span class="text-muted fw-normal">(Format: 613-123-1234)</span></label>
                   <input type="tel" class="form-control" id="phone-number" name="phoneNumber" placeholder="613-123-1234" autocomplete="tel">
                 </div>
                 <div class="mb-3">
-                  <label for="email-address" class="form-label">Email <span class="text-muted fw-normal" aria-hidden="true">(required)</span></label>
+                  <label for="email-address" class="form-label">Email <span class="text-danger" aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
                   <input type="email" class="form-control" id="email-address" name="email" required aria-required="true" autocomplete="email" aria-describedby="email-error">
                   <div id="email-error" class="field-error" role="alert" aria-live="polite"></div>
                 </div>
@@ -354,7 +354,7 @@
               </form>
             </div>
             <div class="col-md-4 d-flex align-items-start justify-content-center pt-3">
-              <img src="images/scheduleacall.png" alt="Person holding a smartphone, ready to schedule a call" class="img-fluid rounded">
+              <img src="images/scheduleacall.png" alt="" aria-hidden="true" class="img-fluid rounded">
             </div>
           </div>
         </div>
