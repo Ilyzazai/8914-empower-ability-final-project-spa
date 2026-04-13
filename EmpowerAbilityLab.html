@@ -1,21 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--
-  WHY lang="en":
-  Screen readers like NVDA, JAWS, and VoiceOver use this attribute to
-  select the correct speech synthesizer language and pronunciation rules.
-  Without it, a screen reader might mispronounce English words using
-  a different language's rules. WCAG 3.1.1 (Language of Page, Level A).
--->
+<!-- WCAG 3.1.1 (Language of Page, Level A).-->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
   <!--
     WHY meta description:
-    Gives screen readers and search engines a summary of the page's purpose.
-    Not a WCAG requirement, but best practice for accessibility and SEO.
-  -->
+    Gives screen readers and search engines a summary of the page's purpose.Not a WCAG requirement, but best practice for accessibility and SEO.  -->
   <meta
     name="description"
     content="Empower Ability Labs — Foster understanding and promote inclusive digital experiences for all."
@@ -57,45 +49,19 @@
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
 
-  <!--
-    ============================================================
-    HEADER + NAVBAR
-    ============================================================
-  -->
+  <!--   HEADER + NAVBAR  -->
   <header>
     <!--
       WHY <nav> with aria-label:
       <nav> creates a "navigation" landmark region that screen reader
       users can jump to directly (e.g. pressing N in NVDA, or using
       the VoiceOver rotor). WCAG 1.3.6 (Identify Purpose).
-
-      aria-label="Main navigation" distinguishes this <nav> from any
-      other nav on the page (e.g. a footer nav). Without it, screen
-      readers just say "navigation" with no context.
-
-      WHY navbar-dark bg-dark:
-      White (#fff) text on dark (#212529) background.
-      Contrast ratio ≈ 16.7:1. WCAG 1.4.3 requires minimum 4.5:1. ✅
-
-      WHY fixed-top:
-      Keeps the nav visible while scrolling (usability).
-      body has padding-top: 70px in CSS to prevent content overlap.
     -->
     <nav
       class="navbar navbar-expand-md navbar-dark bg-dark fixed-top"
       aria-label="Main navigation"
     >
       <div class="container">
-
-        <!--
-          WHY logo as a link:
-          The <img> alt="Empower Ability Labs" gives this link its
-          accessible name. Screen reader announces:
-          "Empower Ability Labs, link" — clear and meaningful.
-          WCAG 1.1.1 (Non-text Content) and 2.4.4 (Link Purpose).
-          Using native <a> gives keyboard focus and Enter key for free —
-          this is the "native HTML first" principle.
-        -->
         <a class="navbar-brand" href="#home" data-view="home">
           <img
             src="images/empowerabilitylabslogo.png"
@@ -107,8 +73,7 @@
         <!--
           WHY these attributes on the hamburger button:
           - type="button": prevents form submission if wrapped in a form
-          - aria-controls="mainNav": tells screen readers WHICH element
-            this button controls (must match id of the collapsible div below)
+          - aria-controls="mainNav": tells screen readers WHICH element this button controls (must match id of the collapsible div below)
           - aria-expanded="false": tells screen readers the menu is currently
             collapsed. JS toggles this to "true" when menu opens.
           - aria-label="Toggle navigation menu": gives the button a
