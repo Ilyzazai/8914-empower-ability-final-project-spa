@@ -97,26 +97,42 @@ main {
    ============================================================ */
 
 /*
-  WHY we define explicit colors for nav links:
-  Bootstrap's default navbar-dark makes inactive links semi-transparent
-  white (rgba 255,255,255,0.55) on dark background — that can fail
-  contrast depending on the exact bg color.
+  ============================================================
+  NAVBAR BRAND (LOGO TEXT) — CONTRAST FIX
+  WHY: Bootstrap's .navbar-brand on navbar-dark defaults to
+  rgba(255,255,255,0.9) — slightly transparent white which can
+  visually appear grey and may fail contrast checks in tools.
+  FIX: Force fully opaque #fff (white) on the dark bg (#212529).
+  White on #212529 = 16.7:1 ✅ WCAG 1.4.3 (minimum 4.5:1).
+  ============================================================ */
+.navbar-dark .navbar-brand,
+.navbar-dark .navbar-brand:hover,
+.navbar-dark .navbar-brand:focus {
+  color: #fff !important;
+  /* WHY !important: overrides Bootstrap's rgba value which would
+     otherwise win due to specificity */
+}
 
-  FIX: We force fully opaque white (#fff) for inactive links.
-  White (#fff) on navbar bg (#212529) = 16.7:1 ✅ WCAG 1.4.3.
-*/
+
+/*
+  ============================================================
+  NAVBAR INACTIVE LINKS — CONTRAST FIX
+  Bootstrap navbar-dark makes inactive links rgba(255,255,255,0.55)
+  which is semi-transparent and FAILS contrast on some checkers.
+  FIX: Force fully opaque #fff.
+  White (#fff) on #212529 = 16.7:1 ✅ WCAG 1.4.3.
+  ============================================================ */
 .navbar-dark .navbar-nav .nav-link {
-  color: #fff;
-  /* WHY: Ensures inactive nav links are full white, not semi-transparent */
+  color: #fff !important;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover,
 .navbar-dark .navbar-nav .nav-link:focus {
-  color: #fff;
+  color: #fff !important;
   text-decoration: underline;
   /* WHY underline on hover/focus:
-     WCAG 1.4.1 (Use of Color) — color alone cannot distinguish
-     interactive state. Underline provides a non-color indicator. */
+     WCAG 1.4.1 (Use of Color) — color alone must not be the only
+     way to show interactive state. Underline is a non-color cue. */
 }
 
 /*

@@ -148,6 +148,16 @@ function knowledgeRunner() {
     thankYouMessage.focus();
   });
 
+  // Space bar activation code 
+  document.querySelectorAll('#view-home a[href]').forEach(link => {
+  link.addEventListener('keydown', e => {
+    if (e.key === ' ') {
+      e.preventDefault(); // stops page from scrolling on Space
+      link.click();       // triggers the link as if clicked
+    }
+  });
+});
+
 }
 
 knowledgeRunner();

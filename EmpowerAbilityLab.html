@@ -298,15 +298,23 @@
             WHY native <button> instead of <a> or <div>:
             Using a native <button> gives us for FREE:
             - Correct role: screen reader says "button" not just text
-            - Keyboard: both Enter AND Space bar activate it
+            - Keyboard: both Enter AND Space bar activate it natively
             - Focus: included in Tab order automatically
             No ARIA role needed. This is the "native HTML first" principle.
+            IMPORTANT: type="button" prevents any accidental form submission.
 
             WHY aria-haspopup="dialog":
             Tells screen readers this button will open a dialog/modal.
+            WCAG 4.1.2 (Name, Role, Value).
+
+            WHY aria-describedby="community-btn-desc":
+            The button text alone says "Meet the Empower Community!" but
+            screen readers can announce additional context from the hidden
+            description element below. This gives users more information
+            about what the dialog contains BEFORE they open it.
             Screen reader announces:
-            "Meet the Empower Community!, has popup dialog, button"
-            Users know what to expect BEFORE pressing it. WCAG 4.1.2.
+            "Meet the Empower Community!, has popup dialog, button —
+             Learn about the organizations we have worked with"
 
             WHY btn-warning (yellow) color:
             Black (#000) text on #ffc107 (yellow) = 17.7:1 ✅
@@ -317,9 +325,24 @@
             class="btn btn-warning fw-bold"
             id="meet-community-btn"
             aria-haspopup="dialog"
+            aria-describedby="community-btn-desc"
           >
             Meet the Empower Community!
           </button>
+
+          <!--
+            WHY visually-hidden description:
+            This text is hidden from sighted users but read by screen readers
+            via aria-describedby on the button above.
+            It gives screen reader users extra context about what the dialog
+            contains before they decide to open it.
+            WCAG 1.3.1 (Info and Relationships).
+          -->
+          <p id="community-btn-desc" class="visually-hidden">
+            Opens a dialog with information about organizations we have worked
+            with, including McGill University, Walmart, Apple, Google, and the
+            Government of Canada.
+          </p>
 
         </div>
       </div>
@@ -444,7 +467,7 @@
 
     </section>
     <!-- END HOME VIEW -->
-
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
       <section id="view-services" aria-labelledby="services-heading" hidden>
         <div class="container py-5">
           <h1 id="services-heading">Services</h1>
@@ -532,7 +555,7 @@
 <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     </main>
 
-     <div id="community-modal" class="modal-backdrop" hidden>
+    <div id="community-modal" class="modal-backdrop" hidden>
 
     <!--
       WHY role="dialog":
