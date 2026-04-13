@@ -1,26 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- WCAG 3.1.1 (Language of Page, Level A).-->
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-  <!--
-    WHY meta description:
-    Gives screen readers and search engines a summary of the page's purpose.Not a WCAG requirement, but best practice for accessibility and SEO.  -->
+  
   <meta
     name="description"
     content="Empower Ability Labs — Foster understanding and promote inclusive digital experiences for all."
   />
 
-  <!--
-    WHY unique title:
-    WCAG 2.4.2 (Page Titled, Level A) requires each page/view to have
-    a descriptive title. In a SPA, the JS dynamically updates document.title
-    on every view change so screen readers announce the new "page".
-    Format: "View Name - Site Name" is the recommended pattern.
-    This starting value matches the Home view.
-  -->
   <title>Empower Ability Labs</title>
 
   <link
@@ -49,19 +39,27 @@
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
 
-  <!--   HEADER + NAVBAR  -->
+  <!--
+    ============================================================
+    HEADER + NAVBAR
+    ============================================================
+  -->
   <header>
-    <!--
-      WHY <nav> with aria-label:
-      <nav> creates a "navigation" landmark region that screen reader
-      users can jump to directly (e.g. pressing N in NVDA, or using
-      the VoiceOver rotor). WCAG 1.3.6 (Identify Purpose).
-    -->
-    <nav
+     <nav
       class="navbar navbar-expand-md navbar-dark bg-dark fixed-top"
       aria-label="Main navigation"
     >
       <div class="container">
+
+        <!--
+          WHY logo as a link:
+          The <img> alt="Empower Ability Labs" gives this link its
+          accessible name. Screen reader announces:
+          "Empower Ability Labs, link" — clear and meaningful.
+          WCAG 1.1.1 (Non-text Content) and 2.4.4 (Link Purpose).
+          Using native <a> gives keyboard focus and Enter key for free —
+          this is the "native HTML first" principle.
+        -->
         <a class="navbar-brand" href="#home" data-view="home">
           <img
             src="images/empowerabilitylabslogo.png"
@@ -70,17 +68,7 @@
           />
         </a>
 
-        <!--
-          WHY these attributes on the hamburger button:
-          - type="button": prevents form submission if wrapped in a form
-          - aria-controls="mainNav": tells screen readers WHICH element this button controls (must match id of the collapsible div below)
-          - aria-expanded="false": tells screen readers the menu is currently
-            collapsed. JS toggles this to "true" when menu opens.
-          - aria-label="Toggle navigation menu": gives the button a
-            descriptive name because it only contains an icon with no text.
-            Without this, screen readers say "button" only.
-          WCAG 4.1.2 (Name, Role, Value).
-        -->
+       
         <button
           class="navbar-toggler"
           type="button"
@@ -90,51 +78,19 @@
           aria-label="Toggle navigation menu"
         >
           <!--
-            WHY aria-hidden on the icon span:
-            The icon is purely decorative — the button's accessible name
-            already comes from aria-label above. Hiding the icon prevents
-            screen readers from announcing it twice or saying "navbar toggler icon".
-          -->
+            WHY aria-hidden on the icon span:The icon is purely decorative — the button's accessible name already comes from aria-label above.  -->
           <span class="navbar-toggler-icon" aria-hidden="true"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="mainNav">
           <!--
-            WHY <ul> with role="list":
-            Using <ul> + <li> is the CORRECT native HTML pattern for
-            navigation per ARIA APG and WCAG 1.3.1.
-            Screen readers announce "list, 3 items" so users know
-            how many links to expect.
-
-            WHY role="list" explicitly:
-            Bootstrap CSS applies list-style:none which causes VoiceOver
-            on iOS/macOS to strip list semantics. role="list" restores
-            the semantic meaning that CSS removed.
-
-            WHY NOT role="menubar":
-            The ARIA APG says "menubar" is for APPLICATION menus (like
-            a desktop app menu). For WEBSITE navigation, use native
-            <nav> + <ul>. Using menubar would require implementing
-            arrow-key navigation which would break Tab navigation. ❌
-          -->
+            WHY <ul> with role="list":Using <ul> + <li> is the CORRECT native HTML pattern for navigation per ARIA APG and WCAG 1.3.1.
+            WHY NOT role="menubar": The ARIA APG says "menubar" is for APPLICATION menus (like
+            a desktop app menu). -->
           <ul class="navbar-nav ms-auto mb-2 mb-md-0" role="list">
 
             <li class="nav-item" role="listitem">
-              <!--
-                WHY aria-current="page" on Home link:
-                WCAG 1.3.1 (Info and Relationships).
-                Sighted users see the blue highlight (class="active").
-                Screen reader users hear "Home, current page, link".
-                Without aria-current, screen readers cannot tell which
-                page is currently active.
-                JS dynamically moves aria-current to whichever nav
-                link matches the current view.
-
-                WHY white text on bg-dark still passes:
-                Active link: white on #0d6efd (blue) = 3.1:1 — this is
-                for LARGE text / UI components (WCAG 1.4.11 = 3:1) ✅
-                Inactive links: white on #212529 = 16.7:1 ✅
-              -->
+              <!-- WHY aria-current="page" on Home link:WCAG 1.3.1 (Info and Relationships). -->
               <a
                 class="nav-link active"
                 href="#home"
@@ -144,12 +100,7 @@
             </li>
 
             <li class="nav-item" role="listitem">
-              <!--
-                WHY no aria-current here:
-                Only the CURRENT page gets aria-current="page".
-                JS adds it dynamically when this view becomes active.
-                WCAG 2.4.4: "Services" clearly describes the destination.
-              -->
+              <!-- WHY no aria-current here: Only the CURRENT page gets aria-current="page".JS adds it dynamically when this view becomes active. -->
               <a class="nav-link" href="#services" data-view="services">Services</a>
             </li>
 
@@ -173,35 +124,10 @@
     ============================================================
     MAIN CONTENT
     ============================================================
-    WHY <main> landmark:
-    WCAG 4.1.2. There must be exactly ONE <main> per page.
-    Screen reader users jump directly to <main> via landmark
-    navigation (e.g. pressing M in NVDA, or using the VoiceOver rotor).
-
-    WHY id="main-content":
-    This is the target of the skip link above (<a href="#main-content">).
-
-    WHY tabindex="-1":
-    Allows JS to call mainContent.focus() programmatically after every
-    view change so keyboard focus is reset to the top of new content.
-    tabindex="-1" means the element can receive focus from JS but is
-    NOT in the natural Tab order (users won't Tab to it accidentally).
-    WCAG 2.4.3 (Focus Order) and SPA rubric: Focus Management.
-  -->
+   -->
   <main id="main-content" tabindex="-1">
 
-    <!--
-      WHY aria-live="polite" announcer:
-      In a normal multi-page website, the browser announces the new
-      page title when you navigate. In a SPA, there is no real
-      navigation — so screen readers stay silent when views change.
-      This hidden div solves that: JS clears it, then sets it to
-      e.g. "Services - Empower Ability Labs — page loaded".
-      aria-live="polite" announces when the user is not doing anything.
-      aria-atomic="true" reads the full message, not just changed parts.
-      class="visually-hidden" hides it visually but keeps it readable
-      by screen readers. WCAG 4.1.3 (Status Messages, Level AA).
-    -->
+    
     <div
       id="page-announcer"
       aria-live="polite"
@@ -213,40 +139,12 @@
     <!-- ==========================================================
          HOME VIEW
          ========================================================== -->
-    <!--
-      WHY <section> with aria-labelledby:
-      <section> creates a named landmark region.
-      aria-labelledby="home-heading" links this region to its <h1>.
-      Screen readers announce: "Welcome to Empower Ability Labs!, region"
-      so users know exactly which content area they are in.
-      WCAG 1.3.1 (Info and Relationships).
-
-      No hidden attribute here — Home is visible by default.
-      JS adds hidden to the other sections and removes it from this
-      one when the Home nav link is clicked.
-    -->
+    <!--WHY <section> with aria-labelledby:<section> creates a named landmark region.aria-labelledby="home-heading" links this region to its <h1>.-->
     <section id="view-home" aria-labelledby="home-heading">
 
-      <!-- HERO BANNER -->
-      <!--
-        WHY hero-section class:
-        CSS sets background-color: #e9ecef (light gray) with dark text.
-        Contrast ratio of body text (#212529) on #e9ecef = 15.3:1 ✅
-        WCAG 1.4.3 requires minimum 4.5:1 for normal text.
-      -->
       <div class="hero-section">
         <div class="container py-5">
 
-          <!--
-            WHY exactly one <h1> per view:
-            WCAG 1.3.1 and 2.4.6. Each view acts as a "page" and
-            must have exactly ONE <h1> as the main heading.
-            id="home-heading" is referenced by aria-labelledby
-            on the <section> parent above.
-            Screen readers announce this as the page's primary heading.
-            Heading hierarchy: h1 here → h2 for the three columns below.
-            Never skip heading levels (e.g. h1 → h3 is wrong).
-          -->
           <h1 id="home-heading">Welcome to Empower Ability Labs!</h1>
 
           <p class="lead">
@@ -259,31 +157,7 @@
             What tools do they employ?
           </p>
 
-          <!--
-            WHY native <button> instead of <a> or <div>:
-            Using a native <button> gives us for FREE:
-            - Correct role: screen reader says "button" not just text
-            - Keyboard: both Enter AND Space bar activate it natively
-            - Focus: included in Tab order automatically
-            No ARIA role needed. This is the "native HTML first" principle.
-            IMPORTANT: type="button" prevents any accidental form submission.
-
-            WHY aria-haspopup="dialog":
-            Tells screen readers this button will open a dialog/modal.
-            WCAG 4.1.2 (Name, Role, Value).
-
-            WHY aria-describedby="community-btn-desc":
-            The button text alone says "Meet the Empower Community!" but
-            screen readers can announce additional context from the hidden
-            description element below. This gives users more information
-            about what the dialog contains BEFORE they open it.
-            Screen reader announces:
-            "Meet the Empower Community!, has popup dialog, button —
-             Learn about the organizations we have worked with"
-
-            WHY btn-warning (yellow) color:
-            Black (#000) text on #ffc107 (yellow) = 17.7:1 ✅
-            Far exceeds the 4.5:1 minimum. WCAG 1.4.3.
+          <!--Using a native <button> gives us for FREE:- Correct role: screen reader says "button" not just text
           -->
           <button
             type="button"
@@ -325,14 +199,7 @@
               These are subheadings UNDER the <h1> above, so they
               must be <h2>. Heading levels form the page outline:
               h1 "Welcome..." → h2 "Our Approach" / "Services" / "Testimonials"
-              Screen reader users navigate by heading levels (H key in NVDA).
-              Skipping from h1 to h3 would break that navigation.
-
-              WHY class="h5" is fine here:
-              class="h5" only changes the VISUAL size using CSS.
-              It does NOT change the semantic heading level.
-              The heading is still an <h2> in the accessibility tree.
-              This is a common and correct Bootstrap pattern.
+            
             -->
             <h2 class="h5">Our Approach</h2>
             <p>
@@ -342,25 +209,7 @@
               the shoes of individuals with disabilities and navigate the world
               from their perspective.
             </p>
-            <!--
-              WHY visually-hidden span on links:
-              WCAG 2.4.4 (Link Purpose, Level A).
-              Without the span, a screen reader user tabbing through links
-              hears "Learn more, Learn more, Learn more" — no context.
-              With it, they hear:
-              "Learn more about Our Approach, opens in a new tab, link"
-              The span text is INVISIBLE to sighted users (CSS clips it)
-              but fully readable by screen readers.
-
-              WHY target="_blank" warning in the span:
-              Opening in a new tab is a change of context. WCAG 3.2.2
-              (On Input) requires warning users. The "(opens in a new tab)"
-              text satisfies this for screen reader users.
-
-              WHY rel="noopener noreferrer":
-              Security best practice. Prevents the new tab from accessing
-              window.opener which could be exploited for phishing.
-            -->
+          
             <a
               href="https://www.google.com/search/howsearchworks/our-approach/"
               target="_blank"
@@ -375,14 +224,7 @@
           <div class="col-md-4">
             <h2 class="h5">Services</h2>
             <p>Promote accessibility awareness and enhance the user experience.</p>
-            <!--
-              WHY native <ul> with <li>:
-              WCAG 1.3.1. Using a proper list gives screen readers the
-              count automatically: "list, 3 items".
-              If we used <p> or <div> instead, users would not know how
-              many items there are without reading them all.
-              Native HTML, no ARIA needed.
-            -->
+            
             <ul>
               <li>Empathy lab days and workshops</li>
               <li>Go beyond WCAG compliance!</li>
@@ -522,21 +364,9 @@
 
     <div id="community-modal" class="modal-backdrop" hidden>
 
-    <!--
-      WHY role="dialog":
-      Tells screen readers this is a modal dialog.
-      Screen reader announces: "Community Steering Committee, dialog"
-      when the modal opens. ARIA APG Dialog Pattern.
-
-      WHY aria-modal="true":
-      Tells screen readers to treat all content OUTSIDE this dialog
-      as inert (not browsable). Modern screen readers use this to
-      restrict virtual cursor to inside the dialog only.
-
-      WHY aria-labelledby="modal-title":
-      Gives the dialog its accessible name from the visible <h2> inside.
-      Screen reader users hear the name of the dialog when it opens.
-      WCAG 4.1.2 (Name, Role, Value).
+    <!--  WHY role="dialog":Tells screen readers this is a modal dialog.
+      WHY aria-modal="true":Tells screen readers to treat all content OUTSIDE this dialog as inert (not browsable). 
+      WHY aria-labelledby="modal-title":Gives the dialog its accessible name from the visible <h2> inside.Screen reader users hear the name of the dialog when it opens.WCAG 4.1.2 (Name, Role, Value).
     -->
     <div
       role="dialog"
@@ -548,35 +378,12 @@
 
       <div class="modal-header-custom">
         <!--
-          WHY <h2> inside the dialog:
-          The dialog is a self-contained content region.
-          <h2> is the correct level here — it is the primary heading
-          of this dialog's content.
-          id="modal-title" is referenced by aria-labelledby above.
-        -->
+          WHY <h2> inside the dialog:The dialog is a self-contained content region.        -->
         <h2 id="modal-title" class="modal-title-text">
           Community Steering Committee
         </h2>
 
-        <!--
-          WHY aria-label on the close button:
-          The button content is just the × symbol — a screen reader
-          would say "times, button" with no context.
-          aria-label="Close Community Steering Committee dialog" gives
-          a full, descriptive name. SR announces:
-          "Close Community Steering Committee dialog, button" ✅
-          WCAG 4.1.2 (Name, Role, Value).
-
-          WHY focus goes here when modal opens:
-          ARIA APG Dialog Pattern requires focus to move INTO the dialog
-          when it opens. JS calls closeX.focus() on openModal().
-          This ensures keyboard users immediately know the dialog is open.
-
-          WHY aria-hidden on the × span:
-          The aria-label on the button already provides the accessible name.
-          aria-hidden="true" tells screen readers to ignore the × character
-          inside and only announce the aria-label text instead.
-        -->
+       
         <button
           type="button"
           id="modal-close-x"
@@ -608,20 +415,7 @@
       </div>
 
       <div class="modal-footer-custom">
-        <!--
-          WHY a second Close button in the footer:
-          ARIA APG Dialog Pattern recommends a visible close button.
-          Having one in the header AND footer improves usability —
-          users do not have to Shift+Tab back to the top to close.
-
-          WHY the JS focus trap is critical here:
-          When Tab is pressed on this last focusable element, JS wraps
-          focus back to modal-close-x (the first focusable element).
-          This keeps focus INSIDE the dialog while it is open.
-          WCAG 2.1.2 (No Keyboard Trap) — note: trapping focus INSIDE
-          a modal IS correct per APG. The user must be able to EXIT
-          via Escape key or a close button, which JS provides.
-        -->
+       
         <button type="button" id="modal-close-btn" class="btn btn-secondary">
           Close
         </button>
